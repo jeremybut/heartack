@@ -6,7 +6,6 @@ app.controller('AdminCtrl', ['$scope', '$http', 'Flash',
 
 	$http.get('/api/users').success(function(result, status, headers) {
 		$scope.users = result;
-		Flash.create('success', result);
 	}).error(function(data,status) {
 		Flash.create('danger', data);
 	});

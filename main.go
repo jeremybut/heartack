@@ -5,7 +5,12 @@ import (
 	"github.com/auth0/go-jwt-middleware"
 	"github.com/codegangsta/negroni"
 	"github.com/dgrijalva/jwt-go"
+  "database/sql"
+  _ "github.com/lib/pq"
+  "github.com/rubenv/sql-migrate"
 	"net/http"
+  "fmt"
+  "time"
 )
 
 var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
@@ -16,7 +21,25 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 	Debug: false,
 })
 
+func initDB() {
+  	migrations := &migrate.FileMigrationSource{
+    Dir: "db/migrations",
+	}
+
+  db, err := sql.Open("postgres", "dbname=heartack sslmode=disable")
+  if err != nil {
+      // Handle errors!
+  }
+
+  n, err := migrate.Exec(db, "postgres", migrations, migrate.Up)
+  if err != nil {
+      // Handle errors!
+  }
+}
+
 func main() {
+  initDB()
+
 	router := http.NewServeMux()
 
 	// links `api/admin` route to protected handler
