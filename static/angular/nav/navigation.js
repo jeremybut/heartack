@@ -1,16 +1,16 @@
-
 var app = angular.module('nav', ['flash', 'ngAnimate']);
 app.controller('NavCtrl', ['$rootScope', '$scope', 'Flash', 'AuthService', 'TokenStorage',
- function ($rootScope, $scope, Flash, AuthService, TokenStorage) {
+    function($rootScope, $scope, Flash, AuthService, TokenStorage) {
 
-    $scope.auth = AuthService.authenticated();
+        $scope.auth = AuthService.authenticated();
 
-    $scope.logout = function() {
-        TokenStorage.clear();
-        AuthService.setAuthentication(false);
-        Flash.create('info', "Logged out successfully !");     
-    };    
-}]);
+        $scope.logout = function() {
+            TokenStorage.clear();
+            AuthService.setAuthentication(false);
+            Flash.create('info', "Logged out successfully !");
+        };
+    }
+]);
 
 var app = angular.module('flash', []);
 app.run(function($rootScope) {

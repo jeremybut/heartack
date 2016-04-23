@@ -1,4 +1,3 @@
-
 package main
 
 import (
@@ -15,11 +14,11 @@ func UsersHandler(response http.ResponseWriter, request *http.Request) {
 	// user credentials
 	user := []User{
 		{
-			Email: 	  "admin@example.com",
+			Email:    "admin@example.com",
 			Password: "admin",
 		},
 		{
-			Email: 	  "admin1@example.com",
+			Email:    "admin1@example.com",
 			Password: "admin1",
 		},
 	}

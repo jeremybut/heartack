@@ -1,4 +1,3 @@
-
 package main
 
 import (
@@ -23,7 +22,7 @@ func AuthHandler(resp http.ResponseWriter, request *http.Request) {
 		Log.Println(err.Error())
 		return
 	}
-	
+
 	if cred.Email == "admin@example.com" && cred.Password == "admin" {
 		token := jwt.New(jwt.SigningMethodHS256)
 		token.Claims["foo"] = "bar"

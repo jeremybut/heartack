@@ -1,16 +1,15 @@
-
 package main
 
 import (
+	"database/sql"
+	"fmt"
 	"github.com/auth0/go-jwt-middleware"
 	"github.com/codegangsta/negroni"
 	"github.com/dgrijalva/jwt-go"
-  "database/sql"
-  _ "github.com/lib/pq"
-  "github.com/rubenv/sql-migrate"
+	_ "github.com/lib/pq"
+	"github.com/rubenv/sql-migrate"
 	"net/http"
-  "fmt"
-  "time"
+	"time"
 )
 
 var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
@@ -22,30 +21,31 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 })
 
 func initDB() {
-  fmt.Println("Initializing database")
-  	migrations := &migrate.FileMigrationSource{
-    Dir: "db/migrations",
+	fmt.Println("Initializing database")
+	migrations := &migrate.FileMigrationSource{
+		Dir: "db/migrations",
 	}
 
-  db, err := sql.Open("postgres", "dbname=heartack sslmode=disable")
-  if err != nil {
-      // Handle errors!
-  }
+	db, err := sql.Open("postgres", "dbname=heartack sslmode=disable")
+	if err != nil {
+		// Handle errors!
+	}
 
-  n, err := migrate.Exec(db, "postgres", migrations, migrate.Up)
-  if err != nil {
-      // Handle errors!
-  }
-  fmt.Printf("Applied %d migrations!\n", n)  
+	n, err := migrate.Exec(db, "postgres", migrations, migrate.Up)
+	if err != nil {
+		// Handle errors!
+	}
+	fmt.Printf("Applied %d migrations!\n", n)
 }
 
 func main() {
-  initDB()
-  
-  fmt.Println("=> Booting GoServer")
-  fmt.Println("=> Go application starting on http://0.0.0.0:3000")
-  fmt.Println("=> Ctrl-C to shutdown server")
-  fmt.Println("[", time.Now(), "]")
+	initDB()
+
+	fmt.Println("=> Booting GoServer")
+	fmt.Println("=> Go application starting on http://0.0.0.0:3000")
+	fmt.Println("=> Ctrl-C to shutdown server")
+	fmt.Println("[", time.Now(), "]")
+	fmt.Println("Server Started, ")
 
 	router := http.NewServeMux()
 
@@ -60,9 +60,8 @@ func main() {
 		negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
 		negroni.Wrap(http.HandlerFunc(AuthenticateHandler)),
 	))
-	
+
 	// serves the static files for angular js application as well as all other resources
 	router.Handle("/", http.FileServer(http.Dir("./static/")))
 	http.ListenAndServe(":8080", router)
-  fmt.Println("Server Started, ")
 }

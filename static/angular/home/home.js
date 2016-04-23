@@ -1,5 +1,3 @@
-
 var app = angular.module('home', []);
 
-app.controller('PageCtrl', function($scope) {
-});
+app.controller('PageCtrl', function($scope) {});

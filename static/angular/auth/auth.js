@@ -1,4 +1,3 @@
-
 var app = angular.module('auth', ['flash', 'ngAnimate']);
 
 app.factory('TokenStorage', function() {
@@ -18,7 +17,9 @@ app.factory('TokenStorage', function() {
 
 app.service('AuthService', function(TokenStorage) {
     var isAuth = TokenStorage.retrieve() == null || TokenStorage.retrieve() === undefined;
-    var auth = {logged_in : !isAuth };
+    var auth = {
+        logged_in: !isAuth
+    };
 
     this.authenticated = function() {
         return auth;
@@ -52,34 +53,23 @@ app.factory('TokenAuthInterceptor', function($q, $rootScope, TokenStorage, AuthS
 });
 
 app.controller('AuthCtrl', ['$scope', '$http', 'TokenStorage', 'AuthService', 'Flash', '$location',
- function ($scope, $http, TokenStorage, AuthService, Flash, $location) {
+    function($scope, $http, TokenStorage, AuthService, Flash, $location) {
 
-    $scope.token; // For display purposes only
-    $scope.init = function() {
-        $http.get('/api/authenticated').success(function(user) {
-            if (user.email !== 'anonymousUser') {
+        $scope.login = function() {
+            $http.post('/api/login', {
+                email: $scope.email,
+                password: $scope.password
+
+            }).success(function(result, status, headers) {
                 AuthService.setAuthentication(true);
-            }
-        });
-    };
-    
-    $scope.init();
+                TokenStorage.store(headers('X-Auth-Token'));
+                $location.path('/admin');
+                Flash.create('success', 'Logged in successfully !');
 
-    $scope.login = function() {
-        $http.post('/api/login', {
-            email: $scope.email,
-            password: $scope.password
+            }).error(function() {
+                TokenStorage.clear();
+            });
+        };
 
-        }).success(function(result, status, headers) {
-            AuthService.setAuthentication(true);
-            TokenStorage.store(headers('X-Auth-Token'));
-            $location.path('/admin');
-            Flash.create('success', 'Logged in successfully !');
-
-        }).error(function() {
-            TokenStorage.clear();
-        });
-    };
-
-}]);
-
+    }
+]);
