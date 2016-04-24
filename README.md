@@ -17,9 +17,7 @@ Child's play
 ```sh
 $ git clone git@git.tymate.com:jeremy/heartack.git
 $ cd heartack
-$ go get .
-$ go install
-$ make run
+$ make full
 ```
 Then run your favorite browser and go to:
  [http://localhost:8080] [localhost]
