@@ -1,11 +1,13 @@
-package main
+package controllers
 
 import (
 	"encoding/json"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
+	"heartack/models"
 	"net/http"
 	"time"
+	"heartack/utils"
 )
 
 // specific handle for authing the API for the website
@@ -15,11 +17,11 @@ func AuthHandler(resp http.ResponseWriter, request *http.Request) {
 		return
 	}
 	decoder := json.NewDecoder(request.Body)
-	cred := User{"John", "Doe", "user@example.com", "user"}
+	cred := models.User{"test", "test", "ok", "ok"}
 	err := decoder.Decode(&cred)
 
 	if err != nil {
-		Log.Println(err.Error())
+		utils.Log.Println(err.Error())
 		return
 	}
 
@@ -29,7 +31,7 @@ func AuthHandler(resp http.ResponseWriter, request *http.Request) {
 		token.Claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 		tokenString, err := token.SignedString([]byte("secret"))
 		if err != nil {
-			Log.Println(err.Error())
+			utils.Log.Println(err.Error())
 		}
 		resp.Header().Add("X-Auth-Token", tokenString)
 	} else {

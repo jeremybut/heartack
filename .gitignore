@@ -5,7 +5,8 @@
 # Packages #
 ############
 /pkg
-/src
+/src/github.com
+/src/gopkg.in
 
 # Config #
 ############

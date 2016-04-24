@@ -1,9 +1,11 @@
-package main
+package controllers
 
 import (
 	"encoding/json"
 	"fmt"
+	"heartack/models"
 	"net/http"
+	"heartack/utils"
 )
 
 func UsersHandler(response http.ResponseWriter, request *http.Request) {
@@ -12,7 +14,7 @@ func UsersHandler(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 	// user credentials
-	user := []User{
+	user := []models.User{
 		{
 			Email:    "admin@example.com",
 			Password: "admin",
@@ -24,7 +26,7 @@ func UsersHandler(response http.ResponseWriter, request *http.Request) {
 	}
 	out, err := json.Marshal(user)
 	if err != nil {
-		Log.Println(err.Error())
+		utils.Log.Println(err.Error())
 		return
 	}
 	fmt.Fprintln(response, string(out))

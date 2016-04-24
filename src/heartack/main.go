@@ -1,13 +1,16 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
 	"github.com/auth0/go-jwt-middleware"
 	"github.com/codegangsta/negroni"
 	"github.com/dgrijalva/jwt-go"
 	_ "github.com/lib/pq"
 	"github.com/rubenv/sql-migrate"
+
+	"heartack/controllers"
+
+	"database/sql"
+	"fmt"
 	"net/http"
 	"time"
 )
@@ -23,7 +26,7 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 func initDB() {
 	fmt.Println("Initializing database")
 	migrations := &migrate.FileMigrationSource{
-		Dir: "db/migrations",
+		Dir: "db/migrate",
 	}
 
 	db, err := sql.Open("postgres", "dbname=heartack sslmode=disable")
@@ -44,21 +47,20 @@ func main() {
 	fmt.Println("=> Booting GoServer")
 	fmt.Println("=> Go application starting on http://0.0.0.0:3000")
 	fmt.Println("=> Ctrl-C to shutdown server")
-	fmt.Println("[", time.Now(), "]")
-	fmt.Println("Server Started, ")
+	fmt.Println("Server Started at: ", time.Now())
 
 	router := http.NewServeMux()
 
 	// links `api/admin` route to protected handler
-	router.HandleFunc("/api/login", AuthHandler)
+	router.HandleFunc("/api/login", controllers.AuthHandler)
 	router.Handle("/api/users", negroni.New(
 		negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
-		negroni.Wrap(http.HandlerFunc(UsersHandler)),
+		negroni.Wrap(http.HandlerFunc(controllers.UsersHandler)),
 	))
 
 	router.Handle("/api/authenticated", negroni.New(
 		negroni.HandlerFunc(jwtMiddleware.HandlerWithNext),
-		negroni.Wrap(http.HandlerFunc(AuthenticateHandler)),
+		negroni.Wrap(http.HandlerFunc(controllers.AuthenticateHandler)),
 	))
 
 	// serves the static files for angular js application as well as all other resources

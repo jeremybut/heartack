@@ -1,12 +1,4 @@
-package main
-
-type User struct {
-	Firstname string `json:"firstname"`
-	Lastname  string `json:"lastname"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
-	// Patients              []Patient         `json:"patients"`
-}
+package models
 
 type Patient struct {
 	Firstname            string `json:"firstname"`
@@ -26,14 +18,4 @@ type Patient struct {
 	UserID       uint   `json:"doctor_id"`
 	// BloodPressures        []BloodPressure   `json:"blood_pressures"`
 	// HeartRates            []HeartRate       `json:"heart_rates"`
-}
-
-type BloodPressure struct {
-	value     string `json:"value"`
-	PatientID int    `json:"patient_id"`
-}
-
-type HeartRate struct {
-	value     string `json:"value"`
-	PatientID int    `json:"patient_id"`
 }
