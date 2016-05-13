@@ -8,6 +8,7 @@ API allowing the doctor to recover cardiac readings of his patients to detect an
 You need Golang installed:
 
 * [Install Golang] [Golang]
+* Create your DB named: 'heartack'
 * Configure your environments variables (see the advice section)
 
 ## Installing

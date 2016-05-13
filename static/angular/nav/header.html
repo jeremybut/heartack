@@ -1,17 +1,40 @@
-<nav class="navbar navbar-fixed-top navbar-default">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <a class="navbar-brand" href="#/"><span class="love">♥ </span> Heartack</a>
-      </div>
-      <div class="col-md-6">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#/home">Home</a></li>
-          <li ng-if="auth.logged_in"><a href="#/admin">Admin</a></li>
-          <li ng-if="auth.logged_in" ><a ng-click="logout()" href="#/logout">Logout</a></li>
-          <li ng-if="!auth.logged_in"><a href="#/login">Login</a></li>
-        </ul>
-      </div>
+<header class="errors has_menu l-header" id="mod-header">
+  <div class="l-start">
+    <div class="mod-chooser">
+      <a href="#/home">
+        <h1 class="site-title">
+          <span class="environment full love">♥ </span>Heartack
+        </h1>
+      </a>
     </div>
   </div>
-</nav>
+
+  <div ng-if="auth.logged_in" ng-click="toggleprofileNav()" class="l-end">
+    <div class="c-avatar">
+      <div class="image"></div>
+    </div>
+  </div>
+  <div ng-if="profileNav" class="mod-profile-navigation">
+    <div>
+      <h2>Jérémy</h2>
+      <ul>
+        <li><a href="">Profil</a></li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li><a ng-click="logout()" href="#/logout">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+  <div ng-if="!auth.logged_in" class="nav-end">
+    <div class="mod-chooser">
+      <h1 class="site-title">
+        <ul>
+          <li><a href="#/login">Login</a></li>  
+        </ul>
+      </h1>
+    </div>
+  </div>
+
+</header>

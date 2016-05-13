@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"heartack/models"
+	"heartack/utils"
 	"net/http"
 	"time"
-	"heartack/utils"
 )
 
 // specific handle for authing the API for the website
@@ -16,8 +16,9 @@ func AuthHandler(resp http.ResponseWriter, request *http.Request) {
 		fmt.Fprintln(resp, "Method not supported")
 		return
 	}
+
 	decoder := json.NewDecoder(request.Body)
-	cred := models.User{"test", "test", "ok", "ok"}
+	cred := models.User{"", "", "", ""}
 	err := decoder.Decode(&cred)
 
 	if err != nil {
@@ -39,11 +40,6 @@ func AuthHandler(resp http.ResponseWriter, request *http.Request) {
 	}
 }
 
-// specific handle for accessing the admin API for the website
-func AuthenticateHandler(resp http.ResponseWriter, request *http.Request) {
-	if request.Method != "GET" {
-		fmt.Println(resp, "Method not supported")
-		return
-	}
-	fmt.Println(resp, "true")
+func AuthenticateHandler(w http.ResponseWriter, r *http.Request) {
+  fmt.Println(w, "All good. You only get this message if you're authenticated")
 }

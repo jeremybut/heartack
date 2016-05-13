@@ -1,33 +1,29 @@
 package controllers
 
 import (
+	"heartack/models"
+	"heartack/utils"
+
 	"encoding/json"
 	"fmt"
-	"heartack/models"
 	"net/http"
-	"heartack/utils"
 )
 
-func UsersHandler(response http.ResponseWriter, request *http.Request) {
-	if request.Method != "GET" {
-		fmt.Fprintln(response, "Method not supported")
+func UsersHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, http.StatusText(405), 405)
 		return
 	}
-	// user credentials
-	user := []models.User{
-		{
-			Email:    "admin@example.com",
-			Password: "admin",
-		},
-		{
-			Email:    "admin1@example.com",
-			Password: "admin1",
-		},
+	pts, err := models.AllPatients()
+	if err != nil {
+		http.Error(w, http.StatusText(500), 500)
+		return
 	}
-	out, err := json.Marshal(user)
+
+	out, err := json.Marshal(pts)
 	if err != nil {
 		utils.Log.Println(err.Error())
 		return
 	}
-	fmt.Fprintln(response, string(out))
+	fmt.Fprintln(w, string(out))
 }

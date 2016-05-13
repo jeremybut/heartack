@@ -1,12 +1,58 @@
-<div class="section">
-  <div class="container">
-    <h2>User List</h2>
-    <div class="row">
-      <div class="col-lg-12">
-        <ul>
-          <li ng-repeat="user in users">{{user.username}} <span>{{user.password}}</li>
-        </ul>
-      </div>
+<div class="mod-filter">
+  <div class="filter deploys align-right">
+    <div class="option">
+      <span>TODO</span><i class="fa fa-caret-down"></i>
     </div>
   </div>
 </div>
+<div class="mod-table">
+  <table class="sortable errors">
+    <colgroup>
+      <col class="percent_40">
+      <col class="percent_20">
+      <col class="percent_20">
+      <col class="percent_20">
+    </colgroup>
+    <thead>
+      <tr class="table-title">
+        <th colspan="4">
+          Patients List
+        </th>
+      </tr>
+      <tr class="column-titles">
+        <th class="header">ID</th>
+        <th class="header">Fullname</th>
+        <th class="header bars">Email</th>
+        <th class="header bars">SocialSecurityNumber</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="error" ng-repeat="patient in patientsTable">
+        <td>
+          <span class="tipsy-n status">
+            <i class="fa fa-fw status fa-circle-o red">&nbsp;</i>
+          </span>
+          {{patient.id}}
+        </td>
+        <td>
+          <b>
+            {{patient.lastname}}
+          </b>
+          <i>{{patient.firstname}}</i>
+        </td>
+        <td>
+          <span>
+            {{patient.email}}
+          </span>
+        </td>
+        <td>
+          <span>
+            {{patient.social_security_number}}
+          </span>
+        </td>        
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+

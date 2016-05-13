@@ -20,6 +20,7 @@ clean:
 	rm -rf ./pkg
 	rm -rf ./src/github.com
 	rm -rf ./src/gopkg.in
+	rm -rf ./src/golang.org
 	rm -rf ./static/vendor/components
 
 full:

@@ -1,25 +1,38 @@
-<section class="form form-login">
-  <form name="loginform" novalidate ng-submit="login()">
-    <div class="form-children form-children-login">
-      <h1 class="login-title">Login</h1>
-      <div class="form-group">
-        <input type="text" name="email" id="email" class="form-control" placeholder="Email" ng-model="email" required>
-        <div class="error" ng-show="formUser.email.$dirty && formUser.email.$invalid">
-          <small class="error" ng-show="formUser.email.$error.required">
-          Email is required.
-          </small>
-        </div>
+ <div class="layout-flex">
+  <section class="mod-devise">
+    <header>
+      <h2 class="twoliner">
+      Login</i>
+      </h2>
+    </header>
+    <div class="box">
+      <div class="col">
+        <form name="loginform" novalidate ng-submit="login()">
+          <div class="input">
+            <input name="email" id="email" ng-model="email" required autofocus="autofocus" placeholder="email address" type="email">
+            <div class="error" ng-show="formUser.email.$dirty && formUser.email.$invalid">
+              <small class="error" ng-show="formUser.email.$error.required">
+              Email is required.
+              </small>
+            </div>          
+          </div>      
+          <div class="input">
+            <input id="password" name="password" class="password" ng-model="password" required placeholder="Password" type="password">
+            <div class="error" ng-show="formUser.password.$dirty && formUser.password.$invalid">
+              <small class="error" ng-show="formUser.password.$error.required">
+              Password is required.
+              </small>
+            </div>          
+          </div>
+          <input ng-disabled="loginform.$invalid" type="submit" name="commit" value="Login" class="button">
+        </form>
       </div>
-      <div class="form-group">
-        <input type="password" class="form-control" id="password" name="password" placeholder="Password" ng-model="password" required>
-        <div class="error" ng-show="formUser.password.$dirty && formUser.password.$invalid">
-          <small class="error" ng-show="formUser.password.$error.required">
-          Password is required.
-          </small>
-        </div>
-      </div>
-      
-      <button type="submit" class="btn btn-new btn-width" ng-disabled="loginform.$invalid">Login</button>
+      <footer>
+        <ul>
+          <li><a href="">New here? Sign up!</a></li>
+          <li><a href="">Forgot password?</a></li>
+        </ul>
+      </footer>
     </div>
-  </form>
-</section>
+  </section>
+</div>
